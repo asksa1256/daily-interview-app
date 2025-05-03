@@ -85,9 +85,5 @@ $sidebar-width: 220px;
 
   .main-content {
     width: 100%;
-    margin-left: $sidebar-width;
-  }
-  &.sidebar-closed .main-content {
-    margin-left: 0;
   }
 }
