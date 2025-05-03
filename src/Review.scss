@@ -1,0 +1,75 @@
+.review-page {
+  padding: 2rem;
+
+  h1 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #1e293b;
+  }
+
+  .review-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+
+    .input-search {
+      width: auto;
+      padding: 0.5rem 1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    select {
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+
+    label {
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .question-card {
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.2rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #475569;
+      margin-bottom: 0.75rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .tag {
+        background-color: #e0f2fe;
+        color: #0369a1;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

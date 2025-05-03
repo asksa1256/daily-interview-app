@@ -1,0 +1,389 @@
+// App.scss
+
+$primary-color: #2563eb;
+$primary-border-color: #93c5fd;
+$light-bg: #f9fafb;
+$border-radius: 10px;
+$shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: $light-bg;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+h1 {
+  color: $primary-color;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: $border-radius;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  // padding: 0.7rem 1.2rem;
+  background-color: $primary-color;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+
+  li {
+    // background: $light-bg;
+    padding: 0.75rem;
+    border-radius: $border-radius;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+  }
+}
+
+.required {
+  color: red;
+}
+
+.question-area {
+  width: 100%;
+  text-align: center;
+}
+
+.question-box {
+  background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+  border: 2px solid $primary-border-color;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.question-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $primary-color;
+  background: #fff;
+  text-align: center;
+  padding: 0.75rem;
+  border: 2px solid #93c5fd;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.question-text {
+  font-size: 1.3rem;
+  color: #1e3a8a;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 0.5rem 1rem;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-meta {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  .like-btn,
+  .bookmark-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: $primary-border-color;
+    }
+  }
+
+  .bookmark-btn.active {
+    background-color: $primary-color;
+    color: #fff;
+  }
+}
+
+.answer-textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-top: 1rem;
+}
+
+.submit-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+  }
+}
+
+.model-answer-box {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+  border: 2px solid #93c5fd;
+  border-radius: 10px;
+  padding: 1rem;
+  color: #334155;
+  max-width: 65%;
+
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .tag-list {
+    margin-top: 1.5rem;
+
+    h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      color: #334155;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      .tag {
+        background-color: #e0f2fe;
+        color: #0369a1;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.model-answer-text {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.model-answer-title {
+  margin-bottom: 0.5rem;
+}
+
+/* tags */
+.tag-input-area {
+  margin-top: 1rem;
+
+  input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    .tag {
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      button {
+        background: none;
+        border: none;
+        color: #0369a1;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+/* sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #1f2937;
+  color: white;
+  padding: 1.5rem;
+
+  .logo {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 1rem;
+
+      a {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #38bdf8;
+        }
+      }
+    }
+  }
+}
+
+/* modal */
+.open-modal-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background-color: #0ea5e9;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 41, 59, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: #1e3a8a;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.modal textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:first-child {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    &.cancel {
+      background-color: #e2e8f0;
+      color: #1e293b;
+    }
+  }
+}
