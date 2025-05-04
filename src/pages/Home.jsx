@@ -16,8 +16,6 @@ export default function Home() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
 
-  const [likes, setLikes] = useState(0);
-
   const [bookmarked, setBookmarked] = useState(false);
 
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -26,22 +24,6 @@ export default function Home() {
     const stored = localStorage.getItem("hiddenQuestionIds");
     return stored ? JSON.parse(stored) : [];
   });
-
-  // const getRandomQuestion = async () => {
-  //   const { data, error } = await supabase.from("questions").select("*");
-  //   if (error) {
-  //     console.error("질문 불러오기 오류:", error);
-  //     return;
-  //   }
-
-  //   const visible = data.filter((q) => !hiddenIds.includes(q.id));
-  //   if (visible.length === 0) {
-  //     setCurrentQuestion(null);
-  //   } else {
-  //     const random = visible[Math.floor(Math.random() * visible.length)];
-  //     setCurrentQuestion(random);
-  //   }
-  // };
 
   // 질문 숨기기 (로컬 기준)
   const hideQuestion = () => {
@@ -110,39 +92,6 @@ export default function Home() {
     setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
-  const handleLike = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) {
-      console.error("로그인 필요");
-      return;
-    }
-
-    // 이미 좋아요가 있다면 취소
-    const { data, error } = await supabase
-      .from("likes")
-      .select("*")
-      .eq("user_id", user.id)
-      .eq("question_id", question.id);
-
-    if (data.length === 0) {
-      // 좋아요 추가
-      await supabase
-        .from("likes")
-        .insert([{ user_id: user.id, question_id: question.id }]);
-      setLikes(likes + 1);
-    } else {
-      // 좋아요 제거
-      await supabase
-        .from("likes")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("question_id", question.id);
-      setLikes(likes - 1);
-    }
-  };
-
   const handleBookmark = async () => {
     const {
       data: { user },
@@ -184,9 +133,6 @@ export default function Home() {
               <button onClick={hideQuestion}>이 질문 그만 보기</button>
             </div>
             <div className="question-meta">
-              <button onClick={handleLike} className="like-btn">
-                💖 {likes}
-              </button>
               <button
                 onClick={handleBookmark}
                 className={`bookmark-btn ${bookmarked ? "active" : ""}`}
