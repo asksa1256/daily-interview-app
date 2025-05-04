@@ -1,19 +1,58 @@
 import { supabase } from "../supabaseClient";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newQuestion, setNewQuestion] = useState("");
+
   const [answer, setAnswer] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [modelAnswer, setModelAnswer] = useState("");
+
+  const [submitted, setSubmitted] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
+
   const [likes, setLikes] = useState(0);
+
   const [bookmarked, setBookmarked] = useState(false);
+
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [hiddenIds, setHiddenIds] = useState(() => {
+    // localStorage에서 숨긴 질문 ID 불러오기
+    const stored = localStorage.getItem("hiddenQuestionIds");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  // const getRandomQuestion = async () => {
+  //   const { data, error } = await supabase.from("questions").select("*");
+  //   if (error) {
+  //     console.error("질문 불러오기 오류:", error);
+  //     return;
+  //   }
+
+  //   const visible = data.filter((q) => !hiddenIds.includes(q.id));
+  //   if (visible.length === 0) {
+  //     setCurrentQuestion(null);
+  //   } else {
+  //     const random = visible[Math.floor(Math.random() * visible.length)];
+  //     setCurrentQuestion(random);
+  //   }
+  // };
+
+  // 질문 숨기기 (로컬 기준)
+  const hideQuestion = () => {
+    if (!currentQuestion) return;
+
+    const updatedHidden = [...hiddenIds, currentQuestion.id];
+    setHiddenIds(updatedHidden);
+    localStorage.setItem("hiddenQuestionIds", JSON.stringify(updatedHidden));
+
+    getRandomQuestion(); // 다음 질문 보여주기
+  };
 
   async function getRandomQuestion() {
     const { data, error } = await supabase.from("questions").select("*");
@@ -142,6 +181,7 @@ export default function Home() {
             <h2 className="question-label">💡 오늘의 질문</h2>
             <div className="question-box">
               <p className="question-text">❝ {question.question} ❞</p>
+              <button onClick={hideQuestion}>이 질문 그만 보기</button>
             </div>
             <div className="question-meta">
               <button onClick={handleLike} className="like-btn">
@@ -153,13 +193,14 @@ export default function Home() {
               >
                 🔖 {bookmarked ? "북마크됨" : "북마크"}
               </button>
+              <button onClick={getRandomQuestion}>다른 질문 보기</button>
             </div>
           </div>
         ) : (
           <p>질문을 불러오는 중입니다...</p>
         )}
         <textarea
-          placeholder="당신의 답변을 작성해보세요..."
+          placeholder="답변을 작성하고 모범 답안을 확인해보세요!"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
           rows={5}

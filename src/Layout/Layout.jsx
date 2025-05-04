@@ -30,6 +30,9 @@ const Layout = ({ children }) => {
               <Link to="/bookmarks">북마크</Link>
             </li>
             <li>
+              <Link to="/hidden">숨긴 질문 보기</Link>
+            </li>
+            <li>
               <Link to="/login">로그인</Link>
             </li>
           </ul>
