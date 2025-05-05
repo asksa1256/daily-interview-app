@@ -1,34 +1,78 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import Layout from "../Layout/Layout";
-import "../Review.scss";
+import "./Review.scss";
 
 export default function Review() {
   const [questions, setQuestions] = useState([]);
+
   const [filtered, setFiltered] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [hideAnswers, setHideAnswers] = useState(true);
   const [search, setSearch] = useState("");
+
+  const [loading, setLoading] = useState(true);
+
   const [selectedTag, setSelectedTag] = useState(null);
   const [allTags, setAllTags] = useState([]);
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      const { data, error } = await supabase
+  const [editingQuestion, setEditingQuestion] = useState(null);
+  const [editedText, setEditedText] = useState("");
+  const [editedAnswer, setEditedAnswer] = useState("");
+
+  // 수정, 삭제
+  const questionRef = useRef();
+  const answerRef = useRef();
+
+  const fetchQuestions = async () => {
+    const { data, error } = await supabase
+      .from("questions")
+      .select("*")
+      .order("id", { ascending: false });
+    if (!error) {
+      setQuestions(data);
+      setFiltered(data);
+      const tags = [...new Set(data.flatMap((q) => q.tags || []))];
+      setAllTags(tags);
+    }
+    setLoading(false);
+  };
+
+  const handleEditClick = (question) => {
+    setEditingQuestion(question);
+    setEditedText(question.question);
+    setEditedAnswer(question.modelAnswer);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await supabase
         .from("questions")
-        .select("*")
-        .order("id", { ascending: false });
-      if (!error) {
-        setQuestions(data);
-        setFiltered(data);
-        const tags = [...new Set(data.flatMap((q) => q.tags || []))];
-        setAllTags(tags);
-      }
-      setLoading(false);
-    };
+        .update({
+          question: questionRef.current.value,
+          modelAnswer: answerRef.current.value,
+        })
+        .eq("id", editingQuestion.id);
+
+      setEditingQuestion(null); // 수정/삭제 모달 닫기
+      fetchQuestions();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("정말로 삭제하시겠습니까?")) {
+      await supabase.from("questions").delete().eq("id", id);
+      fetchQuestions();
+    }
+  };
+
+  // 질문 전체 불러오기
+  useEffect(() => {
     fetchQuestions();
   }, []);
 
+  // 질문 필터링
   useEffect(() => {
     let result = [...questions];
 
@@ -49,7 +93,6 @@ export default function Review() {
     <Layout>
       <div className="review-page">
         <h1>📚 전체 질문 리뷰</h1>
-
         <div className="review-controls">
           <input
             type="text"
@@ -102,11 +145,36 @@ export default function Review() {
                     ))}
                   </div>
                 )}
+                <button onClick={() => handleEditClick(q)}>수정</button>
+                <button onClick={() => handleDelete(q.id)}>삭제</button>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* 수정 모달 */}
+      {editingQuestion && (
+        <div className="modal">
+          <h3>질문 수정</h3>
+          <textarea
+            value={editedText}
+            onChange={(e) => setEditedText(e.target.value)}
+            rows={4}
+            ref={questionRef}
+          />
+          <h3>답안 수정</h3>
+          <textarea
+            value={editedAnswer}
+            onChange={(e) => setEditedAnswer(e.target.value)}
+            rows={4}
+            ref={answerRef}
+          />
+          <h3>키워드 수정</h3>
+          <button onClick={handleUpdate}>저장</button>
+          <button onClick={() => setEditingQuestion(null)}>취소</button>
+        </div>
+      )}
     </Layout>
   );
 }

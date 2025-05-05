@@ -1,6 +1,7 @@
 import { supabase } from "../supabaseClient";
 import { useState, useEffect } from "react";
 import Layout from "../Layout/Layout";
+import QuestionCard from "../components/QuestionCard";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
@@ -128,10 +129,7 @@ export default function Home() {
         {question ? (
           <div className="question-area">
             <h2 className="question-label">💡 오늘의 질문</h2>
-            <div className="question-box">
-              <p className="question-text">❝ {question.question} ❞</p>
-              <button onClick={hideQuestion}>이 질문 그만 보기</button>
-            </div>
+            <QuestionCard question={question} hideQuestion={hideQuestion} />
             <div className="question-meta">
               <button
                 onClick={handleBookmark}
@@ -212,6 +210,9 @@ export default function Home() {
               required
             />
             <h2>🏷️ 태그 추가</h2>
+            <p className="modal-title-sub">
+              핵심 키워드를 추가하면 더 잘 기억나요!
+            </p>
             <div className="tag-input-area">
               <input
                 type="text"
