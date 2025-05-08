@@ -2,6 +2,9 @@ import { supabase } from "../supabaseClient";
 import { useState, useEffect } from "react";
 import Layout from "../Layout/Layout";
 import QuestionCard from "../components/QuestionCard";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import IconButton from "../ui/IconButton";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
@@ -131,12 +134,12 @@ export default function Home() {
             <h2 className="question-label">💡 오늘의 질문</h2>
             <QuestionCard question={question} hideQuestion={hideQuestion} />
             <div className="question-meta">
-              <button
+              <IconButton
                 onClick={handleBookmark}
                 className={`bookmark-btn ${bookmarked ? "active" : ""}`}
               >
                 🔖 {bookmarked ? "북마크됨" : "북마크"}
-              </button>
+              </IconButton>
               <button onClick={getRandomQuestion}>다른 질문 보기</button>
             </div>
           </div>
@@ -144,19 +147,19 @@ export default function Home() {
           <p>질문을 불러오는 중입니다...</p>
         )}
         <textarea
-          placeholder="답변을 작성하고 모범 답안을 확인해보세요!"
+          placeholder="답변을 작성하고, 모범 답안을 확인해보세요!"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
           rows={5}
           className="answer-textarea"
         />
-        <button
+        <Button
           onClick={handleSubmit}
           disabled={answer.trim() === ""}
           className="submit-button"
         >
           답 제출하기
-        </button>
+        </Button>
 
         {submitted && (
           <div className="model-answer-box">
@@ -178,66 +181,73 @@ export default function Home() {
           </div>
         )}
 
-        <button
+        <Button
           className="open-modal-button"
           onClick={() => setIsModalOpen(true)}
         >
           질문 추가하기
-        </button>
+        </Button>
       </div>
 
       {isModalOpen && (
-        <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h2>
-              📝 면접 질문 추가 <b className="required">*</b>
-            </h2>
-            <textarea
-              value={newQuestion}
-              onChange={(e) => setNewQuestion(e.target.value)}
-              placeholder="추가할 질문을 입력하세요"
-              rows={4}
-              required
-            />
-            <h2>
-              📝 모범 답안 추가 <b className="required">*</b>
-            </h2>
-            <textarea
-              value={modelAnswer}
-              onChange={(e) => setModelAnswer(e.target.value)}
-              placeholder="모범 답안을 입력하세요"
-              rows={4}
-              required
-            />
-            <h2>🏷️ 태그 추가</h2>
-            <p className="modal-title-sub">
-              핵심 키워드를 추가하면 더 잘 기억나요!
-            </p>
-            <div className="tag-input-area">
-              <input
-                type="text"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={handleTagInput}
-                placeholder="태그를 입력하고 Enter 또는 , 를 누르세요"
-              />
-              <div className="tag-list">
-                {tags.map((tag) => (
-                  <span key={tag} className="tag">
-                    {tag}
-                    <button onClick={() => removeTag(tag)}>×</button>
-                  </span>
-                ))}
+        <Modal>
+          <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-content">
+                <h2>
+                  📝 면접 질문 추가 <b className="required">*</b>
+                </h2>
+                <textarea
+                  value={newQuestion}
+                  onChange={(e) => setNewQuestion(e.target.value)}
+                  placeholder="추가할 질문을 입력하세요"
+                  rows={4}
+                  required
+                />
+                <h2>
+                  📝 모범 답안 추가 <b className="required">*</b>
+                </h2>
+                <textarea
+                  value={modelAnswer}
+                  onChange={(e) => setModelAnswer(e.target.value)}
+                  placeholder="모범 답안을 입력하세요"
+                  rows={4}
+                  required
+                />
+                <h2>🏷️ 태그 추가</h2>
+                <p className="modal-title-sub">
+                  핵심 키워드를 추가하면 더 잘 기억나요!
+                </p>
+                <div className="tag-input-area">
+                  <input
+                    type="text"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    onKeyDown={handleTagInput}
+                    placeholder="태그를 입력하고 Enter 또는 , 를 누르세요"
+                  />
+                  <div className="tag-list">
+                    {tags.map((tag) => (
+                      <span key={tag} className="tag">
+                        {tag}
+                        <button onClick={() => removeTag(tag)}>×</button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="modal-actions">
+                <button onClick={handleAddQuestion}>추가</button>
+                <button
+                  className="cancel"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  닫기
+                </button>
               </div>
             </div>
-            <div className="modal-actions">
-              <button onClick={handleAddQuestion}>추가</button>
-              <button className="cancel" onClick={() => setIsModalOpen(false)}>
-                닫기
-              </button>
-            </div>
           </div>
-        </div>
+        </Modal>
       )}
     </Layout>
   );

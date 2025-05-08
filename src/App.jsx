@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Review from "./pages/Review";
 import HiddenQuestions from "./pages/HiddenQuestions";
-import "./reset.css";
+import "./styles/reset.css";
+import "./styles/variables.scss";
 import "./App.scss";
 
 function App() {
