@@ -4,6 +4,7 @@ import Layout from "../Layout/Layout";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import QuestionSection from "../components/QuestionSection/QuestionSection";
+import AnswerSection from "../components/AnswerSection/AnswerSection";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
@@ -19,9 +20,8 @@ export default function Home() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
 
-  const [bookmarked, setBookmarked] = useState(false);
-
   const [currentQuestion, setCurrentQuestion] = useState(null);
+
   const [hiddenIds, setHiddenIds] = useState(() => {
     // localStorage에서 숨긴 질문 ID 불러오기
     const stored = localStorage.getItem("hiddenQuestionIds");
@@ -95,32 +95,6 @@ export default function Home() {
     setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
-  const handleBookmark = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) {
-      console.error("로그인 필요");
-      return;
-    }
-
-    setBookmarked((prev) => !prev);
-
-    if (bookmarked) {
-      // 북마크 해제
-      await supabase
-        .from("bookmarks")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("question_id", question.id);
-    } else {
-      // 북마크 추가
-      await supabase
-        .from("bookmarks")
-        .insert([{ user_id: user.id, question_id: question.id }]);
-    }
-  };
-
   useEffect(() => {
     getRandomQuestion();
   }, []);
@@ -136,20 +110,7 @@ export default function Home() {
         ) : (
           <p>질문을 불러오는 중입니다...</p>
         )}
-        <textarea
-          placeholder="답변을 작성하고, 모범 답안을 확인해보세요!"
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-          rows={5}
-          className="answer-textarea"
-        />
-        <Button
-          onClick={handleSubmit}
-          disabled={answer.trim() === ""}
-          className="submit-button"
-        >
-          답 제출하기
-        </Button>
+        <AnswerSection handleSubmit={handleSubmit} />
 
         {submitted && (
           <div className="model-answer-box">
