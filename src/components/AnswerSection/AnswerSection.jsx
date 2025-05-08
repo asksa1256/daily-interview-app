@@ -4,6 +4,9 @@ import styles from "./AnswerSection.module.scss";
 
 const AnswerSection = ({ handleSubmit }) => {
   const [answer, setAnswer] = useState("");
+  const handleSubmitAnswer = () => {
+    handleSubmit(answer);
+  };
 
   return (
     <div className={styles["answer-area"]}>
@@ -15,7 +18,7 @@ const AnswerSection = ({ handleSubmit }) => {
         className="answer-textarea"
       />
       <Button
-        onClick={handleSubmit}
+        onClick={handleSubmitAnswer}
         disabled={answer.trim() === ""}
         className="submit-button"
       >

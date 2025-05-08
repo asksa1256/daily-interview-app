@@ -5,11 +5,11 @@ import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import QuestionSection from "../components/QuestionSection/QuestionSection";
 import AnswerSection from "../components/AnswerSection/AnswerSection";
+import ModelAnswerSection from "../components/ModelAnswerSection/ModelAnswerSection";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
   const [newQuestion, setNewQuestion] = useState("");
-
   const [answer, setAnswer] = useState("");
   const [modelAnswer, setModelAnswer] = useState("");
 
@@ -51,7 +51,7 @@ export default function Home() {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (answer) => {
     if (answer.trim() !== "") {
       setSubmitted(true);
     }
@@ -111,27 +111,7 @@ export default function Home() {
           <p>질문을 불러오는 중입니다...</p>
         )}
         <AnswerSection handleSubmit={handleSubmit} />
-
-        {submitted && (
-          <div className="model-answer-box">
-            <h2 className="model-answer-title">📌 모범 답안</h2>
-            <p className="model-answer-text">
-              {question.modelAnswer || "모범 답안이 아직 준비되지 않았습니다."}
-            </p>
-            {question.tags && question.tags.length > 0 && (
-              <div className="tag-list">
-                <div className="tags">
-                  {question.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
+        {submitted && <ModelAnswerSection question={question} />}
         <Button
           className="open-modal-button"
           onClick={() => setIsModalOpen(true)}
