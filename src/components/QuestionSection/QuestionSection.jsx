@@ -1,10 +1,11 @@
 import QuestionCardLabel from "./QuestionCardLabel";
 import QuestionCard from "./QuestionCard";
 import QuestionMeta from "./QuestionMeta";
+import styles from "./QuestionSection.module.scss";
 
 const QuestionSection = ({ question, getRandomQuestion }) => {
   return (
-    <div className="question-area">
+    <div className={styles["question-area"]}>
       <QuestionCardLabel />
       <QuestionCard question={question} />
       <QuestionMeta

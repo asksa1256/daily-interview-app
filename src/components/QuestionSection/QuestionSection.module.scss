@@ -1,0 +1,59 @@
+@use "../../styles/variables.scss" as *;
+
+.question-area {
+  width: 100%;
+  text-align: center;
+}
+
+.question-box {
+  background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+  border: 2px solid $primary-border-color;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.question-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: $primary-color;
+  background: #fff;
+  text-align: center;
+  padding: 0.75rem;
+  border: 2px solid #93c5fd;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.question-text {
+  font-size: 1.3rem;
+  color: #1e3a8a;
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 0.5rem 1rem;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.question-meta {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
