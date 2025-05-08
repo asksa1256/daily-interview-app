@@ -1,10 +1,9 @@
 import { supabase } from "../supabaseClient";
 import { useState, useEffect } from "react";
 import Layout from "../Layout/Layout";
-import QuestionCard from "../components/QuestionCard";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
-import IconButton from "../ui/IconButton";
+import QuestionSection from "../components/QuestionSection/QuestionSection";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
@@ -130,19 +129,10 @@ export default function Home() {
     <Layout>
       <div className="container">
         {question ? (
-          <div className="question-area">
-            <h2 className="question-label">💡 오늘의 질문</h2>
-            <QuestionCard question={question} hideQuestion={hideQuestion} />
-            <div className="question-meta">
-              <IconButton
-                onClick={handleBookmark}
-                className={`bookmark-btn ${bookmarked ? "active" : ""}`}
-              >
-                🔖 {bookmarked ? "북마크됨" : "북마크"}
-              </IconButton>
-              <button onClick={getRandomQuestion}>다른 질문 보기</button>
-            </div>
-          </div>
+          <QuestionSection
+            question={question}
+            getRandomQuestion={getRandomQuestion}
+          />
         ) : (
           <p>질문을 불러오는 중입니다...</p>
         )}
