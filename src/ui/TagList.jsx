@@ -1,12 +1,15 @@
 import styles from "./TagList.module.scss";
 
-const TagList = ({ question }) => {
+const TagList = ({ items, removeTag = () => {}, showRemoveButton = false }) => {
   return (
     <div className={styles["tag-list"]}>
-      <div className={styles["tags"]}>
-        {question.tags.map((tag) => (
-          <span key={tag} className={styles["tag"]}>
+      <div className={styles.tags}>
+        {items.map((tag) => (
+          <span key={tag} className={styles.tag}>
             {tag}
+            {showRemoveButton && (
+              <button onClick={() => removeTag(tag)}>×</button>
+            )}
           </span>
         ))}
       </div>

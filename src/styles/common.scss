@@ -1,0 +1,11 @@
+.form-input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+
+  &.hide {
+    display: none;
+  }
+}

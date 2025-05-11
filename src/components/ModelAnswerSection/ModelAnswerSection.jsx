@@ -9,7 +9,7 @@ const ModelAnswerSection = ({ question }) => {
         {question.modelAnswer || "모범 답안이 아직 준비되지 않았습니다."}
       </p>
       {question.tags && question.tags.length > 0 && (
-        <TagList question={question} />
+        <TagList items={question.tags} showRemoveButton={false} />
       )}
     </div>
   );

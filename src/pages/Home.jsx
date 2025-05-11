@@ -6,6 +6,8 @@ import Button from "../ui/Button";
 import QuestionSection from "../components/QuestionSection/QuestionSection";
 import AnswerSection from "../components/AnswerSection/AnswerSection";
 import ModelAnswerSection from "../components/ModelAnswerSection/ModelAnswerSection";
+import TagList from "../ui/TagList";
+import AddTagList from "../ui/AddTagList";
 
 export default function Home() {
   const [question, setQuestion] = useState(null);
@@ -121,63 +123,41 @@ export default function Home() {
       </div>
 
       {isModalOpen && (
-        <Modal>
-          <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-content">
-                <h2>
-                  📝 면접 질문 추가 <b className="required">*</b>
-                </h2>
-                <textarea
-                  value={newQuestion}
-                  onChange={(e) => setNewQuestion(e.target.value)}
-                  placeholder="추가할 질문을 입력하세요"
-                  rows={4}
-                  required
-                />
-                <h2>
-                  📝 모범 답안 추가 <b className="required">*</b>
-                </h2>
-                <textarea
-                  value={modelAnswer}
-                  onChange={(e) => setModelAnswer(e.target.value)}
-                  placeholder="모범 답안을 입력하세요"
-                  rows={4}
-                  required
-                />
-                <h2>🏷️ 태그 추가</h2>
-                <p className="modal-title-sub">
-                  핵심 키워드를 추가하면 더 잘 기억나요!
-                </p>
-                <div className="tag-list-area">
-                  <input
-                    type="text"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleTagInput}
-                    placeholder="태그를 입력하고 Enter 또는 , 를 누르세요"
-                  />
-                  <div className="tag-list">
-                    {tags.map((tag) => (
-                      <span key={tag} className="tag">
-                        {tag}
-                        <button onClick={() => removeTag(tag)}>×</button>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="modal-actions">
-                <button onClick={handleAddQuestion}>추가</button>
-                <button
-                  className="cancel"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  닫기
-                </button>
-              </div>
-            </div>
-          </div>
+        <Modal
+          setIsModalOpen={setIsModalOpen}
+          handleAddQuestion={handleAddQuestion}
+        >
+          <h2>
+            📝 면접 질문 추가 <b className="required">*</b>
+          </h2>
+          <textarea
+            value={newQuestion}
+            onChange={(e) => setNewQuestion(e.target.value)}
+            placeholder="추가할 질문을 입력하세요"
+            rows={4}
+            required
+          />
+          <h2>
+            📝 모범 답안 추가 <b className="required">*</b>
+          </h2>
+          <textarea
+            value={modelAnswer}
+            onChange={(e) => setModelAnswer(e.target.value)}
+            placeholder="모범 답안을 입력하세요"
+            rows={4}
+            required
+          />
+          <h2>🏷️ 태그 추가</h2>
+          <p className="modal-title-sub">
+            핵심 키워드를 추가하면 더 잘 기억나요!
+          </p>
+          <AddTagList
+            tags={tags}
+            inputValue={tagInput}
+            onChangeInput={(e) => setTagInput(e.target.value)}
+            handleTagInput={handleTagInput}
+            removeTag={removeTag}
+          />
         </Modal>
       )}
     </Layout>
