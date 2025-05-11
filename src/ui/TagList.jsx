@@ -1,9 +1,11 @@
+import styles from "./TagList.module.scss";
+
 const TagList = ({ question }) => {
   return (
-    <div className="tag-list">
-      <div className="tags">
+    <div className={styles["tag-list"]}>
+      <div className={styles["tags"]}>
         {question.tags.map((tag) => (
-          <span key={tag} className="tag">
+          <span key={tag} className={styles["tag"]}>
             {tag}
           </span>
         ))}
