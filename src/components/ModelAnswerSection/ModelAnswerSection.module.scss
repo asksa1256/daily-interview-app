@@ -6,12 +6,12 @@
   padding: 1rem;
   color: #334155;
   max-width: 65%;
+}
 
-  h2 {
-    color: #1e3a8a;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
+.model-answer-title {
+  color: #1e3a8a;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .model-answer-text {
@@ -20,8 +20,4 @@
   border-radius: 10px;
   font-weight: 600;
   white-space: pre-line;
-}
-
-.model-answer-title {
-  margin-bottom: 0.5rem;
 }

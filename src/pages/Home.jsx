@@ -149,7 +149,7 @@ export default function Home() {
                 <p className="modal-title-sub">
                   핵심 키워드를 추가하면 더 잘 기억나요!
                 </p>
-                <div className="tag-input-area">
+                <div className="tag-list-area">
                   <input
                     type="text"
                     value={tagInput}
