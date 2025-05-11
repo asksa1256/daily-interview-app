@@ -1,0 +1,27 @@
+.model-answer-box {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+  border: 2px solid #93c5fd;
+  border-radius: 10px;
+  padding: 1rem;
+  color: #334155;
+  max-width: 65%;
+
+  h2 {
+    color: #1e3a8a;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.model-answer-text {
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.model-answer-title {
+  margin-bottom: 0.5rem;
+}
